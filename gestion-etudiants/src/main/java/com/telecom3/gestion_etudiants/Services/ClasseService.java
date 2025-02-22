@@ -43,7 +43,15 @@ public class ClasseService {
     }
 
     //recuperer classe par niveau
-    
+    public Classe findbyNiveau(int niveau) {
+        Classe classe = classeRepository.findClasseByNiveau(niveau);
+        if (classe == null) {
+            throw new RuntimeException("Classe introuvable");
+        }
+        return classe;
+
+
+    }
 
     //update classe
     public Classe update(ClasseDTO classeDTO) {
@@ -58,6 +66,16 @@ public class ClasseService {
             return this.classeRepository.save(classe);
         }
         throw new RuntimeException("classe introuvable");
+    }
+    //delete classe
+
+    public void delete(Long id) {
+        Classe classe= this.findById(id);
+        if(classe!= null) {
+            this.classeRepository.delete(classe);
+        }
+        throw new RuntimeException("Classe introuvable");
+
     }
 
 }
