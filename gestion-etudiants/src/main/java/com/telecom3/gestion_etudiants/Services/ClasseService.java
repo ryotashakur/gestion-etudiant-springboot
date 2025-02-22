@@ -70,12 +70,21 @@ public class ClasseService {
         if (this.findById(classeDTO.getId()) == null) {
             throw new RuntimeException("id doit pas etre nul");
         }
+        Filiere filiere = filiereService.findById(classeDTO.getIdFiliere());
         Classe classe = this.findById(classeDTO.getId());
 
         if (classe != null) {
+            if(!classe.getNom().equals(classeDTO.getNom())){
+                boolean ifClassNameExist= classeRepository.existsByNomAndFiliere(classeDTO.getNom(), filiere);
+
+                if(ifClassNameExist){
+                    throw new RuntimeException("une classe du même nom existe déja dans le filiere :" + filiere.getNom());
+                }
+            }
+
             classe.setNom(classeDTO.getNom());
             classe.setNiveau(classeDTO.getNiveau());
-            classe.setFiliere(classeDTO.getFiliere());
+            classe.setFiliere(filiere);
             return this.classeRepository.save(classe);
         }
         throw new RuntimeException("classe introuvable");
@@ -84,6 +93,7 @@ public class ClasseService {
 
     public void delete(Long id) {
         Classe classe= this.findById(id);
+
         if(classe!= null) {
             this.classeRepository.delete(classe);
         }
