@@ -18,9 +18,11 @@ public class FiliereService  {
     //createFiliere
 
     public Filiere create(FiliereDTO filiereDTO) {
+        if(filiereRepository.findByNom(filiereDTO.getNom())==null){
+            throw new RuntimeException("Le nom de filier n'existe pas");
+        }
         Filiere filiere= FiliereDTO.filiereDTOtoFiliere(filiereDTO);
-
-      return this.filiereRepository.save(filiere);
+        return this.filiereRepository.save(filiere);
 
     }
 
@@ -37,6 +39,10 @@ public class FiliereService  {
 
     //modifier filiere
     public Filiere update(FiliereDTO filiereDTO) {
+        if(filiereDTO.getNom()==null){
+            throw new RuntimeException("Le nom de filier n'existe pas");
+        }
+
         if(filiereDTO.getId()==null){
             throw new RuntimeException("id doit pas etre nul");
         }
@@ -52,10 +58,13 @@ public class FiliereService  {
 
     public void delete(Long id) {
         Filiere filiere= this.findById(id);
-        if(filiere!= null) {
-            this.filiereRepository.delete(filiere);
+
+        if(filiere== null) {
+            throw new RuntimeException("Filiere introuvable");
+
         }
-        throw new RuntimeException("Filiere introuvable");
+        this.filiereRepository.delete(filiere);
+
 
     }
 
