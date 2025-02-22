@@ -10,6 +10,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -48,5 +51,18 @@ public class ClasseDTO {
         classeDTO.setFiliere(classe.getFiliere());
         return classeDTO;
     }
+
+    //mapper for listclasse to listclassDTO
+
+    public static List<ClasseDTO> listClassetolistClasseDTO(List<Classe> listClasse) {
+
+        List<ClasseDTO> listClasseDTO = new ArrayList<ClasseDTO>();
+        for (Classe classe : listClasse) {
+            listClasseDTO.add(classetoClasseDTO(classe));
+        }
+
+        return listClasseDTO;
+    }
 }
+
 
