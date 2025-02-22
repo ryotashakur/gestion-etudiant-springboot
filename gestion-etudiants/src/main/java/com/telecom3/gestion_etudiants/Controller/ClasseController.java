@@ -1,11 +1,8 @@
 package com.telecom3.gestion_etudiants.Controller;
 
 import com.telecom3.gestion_etudiants.DTO.ClasseDTO;
-import com.telecom3.gestion_etudiants.DTO.FiliereDTO;
 import com.telecom3.gestion_etudiants.Models.Classe;
-import com.telecom3.gestion_etudiants.Models.Filiere;
 import com.telecom3.gestion_etudiants.Services.ClasseService;
-import com.telecom3.gestion_etudiants.Services.FiliereService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,7 +50,7 @@ public class ClasseController {
 
     }
     @GetMapping("{niveau}")
-    public ResponseEntity<ClasseDTO> getClasseById(@Valid @PathVariable int niveau){
+    public ResponseEntity<ClasseDTO> getClasseByNiveau(@Valid @PathVariable int niveau){
 
         Classe classe = classeService.findbyNiveau(niveau);
         ClasseDTO classeDTO= ClasseDTO.classetoClasseDTO(classe);

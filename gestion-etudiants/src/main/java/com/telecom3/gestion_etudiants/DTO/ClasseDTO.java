@@ -27,7 +27,7 @@ public class ClasseDTO {
     @NotNull(message = "le niveau ne doit pas etre nul")
     private int niveau;
 
-    @NotBlank(message = "l'id filiere est obligatoire")
+    @NotNull(message = "l'id filiere est obligatoire")
     private Long idFiliere;
 
 

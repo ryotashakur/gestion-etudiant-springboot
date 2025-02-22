@@ -94,10 +94,11 @@ public class ClasseService {
     public void delete(Long id) {
         Classe classe= this.findById(id);
 
-        if(classe!= null) {
-            this.classeRepository.delete(classe);
+        if(classe== null) {
+            throw new RuntimeException("Classe introuvable");
+
         }
-        throw new RuntimeException("Classe introuvable");
+        this.classeRepository.delete(classe);
 
     }
 
