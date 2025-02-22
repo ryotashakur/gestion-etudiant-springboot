@@ -22,6 +22,5 @@ public class Classe {
     private int niveau;
 
     @ManyToOne
-    @JoinColumn(name = "filiere_id", nullable = false)
-    private Filiere filiere;
+     private Filiere filiere;
 }

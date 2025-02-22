@@ -28,7 +28,8 @@ public class ClasseDTO {
     private int niveau;
 
     @NotBlank(message = "l'id filiere est obligatoire")
-    private Filiere filiere;
+    private Long idFiliere;
+
 
     //Nous crééons nos deux méthodes classeDTOrequest/response
 
@@ -39,7 +40,6 @@ public class ClasseDTO {
         classe.setId(classeDTO.getId());
         classe.setNom(classeDTO.getNom());
         classe.setNiveau(classeDTO.getNiveau());
-        classe.setFiliere(classeDTO.getFiliere());
         return classe;
     }
     //mapper DTOResponse
@@ -48,7 +48,7 @@ public class ClasseDTO {
         classeDTO.setId(classe.getId());
         classeDTO.setNom(classe.getNom());
         classeDTO.setNiveau(classe.getNiveau());
-        classeDTO.setFiliere(classe.getFiliere());
+        classeDTO.setIdFiliere(classe.getFiliere().getId());
         return classeDTO;
     }
 

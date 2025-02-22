@@ -14,12 +14,23 @@ import java.util.List;
 public class ClasseService {
     @Autowired
     private ClasseRepository classeRepository;
+    @Autowired
+    private FiliereService filiereService;
 
     //METHODE CRUD //
 
     //create
     public Classe create(ClasseDTO classeDTO) {
+        Filiere filiere = filiereService.findById(classeDTO.getIdFiliere());
+
         Classe classe= ClasseDTO.classeDTOtoClasse(classeDTO);
+       boolean ifClassNameExist= classeRepository.existsByNomAndFiliere(classeDTO.getNom(), filiere);
+        if(ifClassNameExist){
+            throw new RuntimeException("une classe du même nom existe déja dans le filiere :" + filiere.getNom());
+        }
+
+        filiere.getClasses().add(classe);
+        classe.setFiliere(filiere);
         return  this.classeRepository.save(classe);
 
     }
@@ -55,10 +66,12 @@ public class ClasseService {
 
     //update classe
     public Classe update(ClasseDTO classeDTO) {
+
         if (this.findById(classeDTO.getId()) == null) {
             throw new RuntimeException("id doit pas etre nul");
         }
         Classe classe = this.findById(classeDTO.getId());
+
         if (classe != null) {
             classe.setNom(classeDTO.getNom());
             classe.setNiveau(classeDTO.getNiveau());
@@ -77,5 +90,8 @@ public class ClasseService {
         throw new RuntimeException("Classe introuvable");
 
     }
+
+
+
 
 }

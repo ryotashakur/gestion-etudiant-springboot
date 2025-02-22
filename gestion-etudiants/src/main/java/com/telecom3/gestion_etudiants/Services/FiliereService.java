@@ -13,14 +13,14 @@ import java.util.List;
 public class FiliereService  {
     @Autowired
     private  FiliereRepository filiereRepository;
+
+
     // j'implemente les méthodes crud
 
     //createFiliere
 
     public Filiere create(FiliereDTO filiereDTO) {
-        if(filiereRepository.findByNom(filiereDTO.getNom())==null){
-            throw new RuntimeException("Le nom de filier n'existe pas");
-        }
+        verifyName(filiereDTO.getNom());
         Filiere filiere= FiliereDTO.filiereDTOtoFiliere(filiereDTO);
         return this.filiereRepository.save(filiere);
 
@@ -39,15 +39,14 @@ public class FiliereService  {
 
     //modifier filiere
     public Filiere update(FiliereDTO filiereDTO) {
-        if(filiereDTO.getNom()==null){
-            throw new RuntimeException("Le nom de filier n'existe pas");
-        }
 
         if(filiereDTO.getId()==null){
             throw new RuntimeException("id doit pas etre nul");
         }
       Filiere filiere= this.findById(filiereDTO.getId());
+
         if(filiere!= null) {
+            verifyName(filiereDTO.getNom());
             filiere.setNom(filiereDTO.getNom());
             return this.filiereRepository.save(filiere);
         }
@@ -68,6 +67,12 @@ public class FiliereService  {
 
     }
 
+    //fonction de vérification
+    private void verifyName(String nom ){
 
+        if(filiereRepository.findByNom(nom)!=null){
+            throw new RuntimeException("Le nom de filiere existe déja !");
+        }
+    }
 
 }
