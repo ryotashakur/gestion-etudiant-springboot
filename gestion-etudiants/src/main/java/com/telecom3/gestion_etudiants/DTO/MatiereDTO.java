@@ -1,6 +1,7 @@
 package com.telecom3.gestion_etudiants.DTO;
 
 
+import com.telecom3.gestion_etudiants.Models.Classe;
 import com.telecom3.gestion_etudiants.Models.Matiere;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,16 +24,17 @@ public class MatiereDTO {
     @NotBlank(message = "la matière est obligatoire")
     private String nomMatiere;
 
-    @NotNull(message= " l'id de la classe doit etre")
+    @NotNull(message= "L'ID de la classe est obligatoire")
     private Long classeId;
 
     //creation des mappers static
 
     //  Mapper DTORequest
-    public static Matiere matiereDTOtoMatiere(MatiereDTO matiereDTO) {
+    public static Matiere matiereDTOtoMatiere(MatiereDTO matiereDTO, Classe classe) {
         Matiere matiere = new Matiere();
         matiere.setId(matiereDTO.getId());
         matiere.setNomMatiere(matiereDTO.getNomMatiere());
+        matiere.setClasse(classe);
         return matiere;
     }
 
@@ -45,7 +47,8 @@ public class MatiereDTO {
         return matiereDTO;
     }
 
-    // 🔹 Mapper List<Matiere> to ListMatiereDTO
+    //  Mapper List<Matiere> to ListMatiereDTO
+
     public static List<MatiereDTO> listMatiereToListMatiereDTO(List<Matiere> listMatiere) {
         List<MatiereDTO> listMatiereDTO = new ArrayList<>();
         for (Matiere matiere : listMatiere) {

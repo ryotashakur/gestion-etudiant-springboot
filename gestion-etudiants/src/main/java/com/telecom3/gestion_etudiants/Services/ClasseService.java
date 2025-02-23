@@ -28,7 +28,6 @@ public class ClasseService {
         if(ifClassNameExist){
             throw new RuntimeException("une classe du même nom existe déja dans le filiere :" + filiere.getNom());
         }
-
         filiere.getClasses().add(classe);
         classe.setFiliere(filiere);
         return  this.classeRepository.save(classe);

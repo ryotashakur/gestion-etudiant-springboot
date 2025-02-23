@@ -4,6 +4,9 @@ package com.telecom3.gestion_etudiants.Models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -23,4 +26,8 @@ public class Classe {
 
     @ManyToOne
      private Filiere filiere;
+
+    @OneToMany(mappedBy = "classe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Matiere> matieres = new ArrayList<>();
+
 }
