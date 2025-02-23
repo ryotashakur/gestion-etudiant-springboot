@@ -33,6 +33,9 @@ public class EtudiantDTO {
     @NotNull(message = "l'idclass est obligatoire")
     private Long idClass;
 
+    private ClasseDTO classe;
+    private List<NoteDTO> note= new ArrayList<>();
+
     // Mapper DTO
     public static Etudiant etudiantDTOToEtudiant(EtudiantDTO etudiantDTO) {
 
@@ -43,13 +46,16 @@ public class EtudiantDTO {
         return etudiant;
     }
 
-    //Mapper Entité Etudiant -> DTO
+    //Mapper Entité Etudiant -> DTOResponse
     public static EtudiantDTO etudiantToEtudiantDTO(Etudiant etudiant) {
+
         EtudiantDTO etudiantDTO = new EtudiantDTO();
         etudiantDTO.setNom(etudiant.getNom());
         etudiantDTO.setPrenom(etudiant.getPrenom());
         etudiantDTO.setDateNaissance(etudiant.getDateNaissance());
         etudiantDTO.setIdClass(etudiant.getClasse().getId());
+        etudiantDTO.setClasse(ClasseDTO.classetoClasseDTO(etudiant.getClasse()));
+        etudiantDTO.setNote(NoteDTO.listNoteToListNoteDTO(etudiant.getNotes()));
         return etudiantDTO;
 
     }

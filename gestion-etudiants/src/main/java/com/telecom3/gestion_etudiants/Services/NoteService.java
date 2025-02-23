@@ -73,10 +73,7 @@ public class NoteService {
 
     public Note update (NoteDTO noteDTO,Long id){
         Note note =getById(id);
-        Etudiant etudiant=etudiantService.getById(id);
-        Matiere matiere=matiereService.getMatiereById(id);
-        note.setMatiere(matiere);
-        note.setEtudiant(etudiant);
+        note.setNoteObtenue(noteDTO.getNoteObtenue());
         return noteRepository.save(note);
     }
 

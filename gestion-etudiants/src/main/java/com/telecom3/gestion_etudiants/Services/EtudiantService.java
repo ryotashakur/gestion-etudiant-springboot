@@ -30,7 +30,6 @@ public class EtudiantService {
         Classe classe = classeService.findById(etudiantDTO.getIdClass());
         Etudiant etudiant = EtudiantDTO.etudiantDTOToEtudiant(etudiantDTO);
         etudiant.setClasse(classe);
-        etudiant.se
         return etudiantRepository.save(etudiant);
 
     }
