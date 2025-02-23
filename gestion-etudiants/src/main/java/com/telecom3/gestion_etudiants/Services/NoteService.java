@@ -69,4 +69,10 @@ public class NoteService {
         Note note= getById(id);
         noteRepository.delete(note);
     }
+
+    //recuperer etudiant rattrapage
+    public List<NoteDTO> getEtudiantsEnRattrapage(Long classeId) {
+        List<Note> notesRattrapage = noteRepository.findByMatiereClasseIdAndValeurLessThan(classeId, 10.0);
+        return NoteDTO.listNoteToListNoteDTO(notesRattrapage);
+    }
 }
