@@ -4,7 +4,10 @@ import com.telecom3.gestion_etudiants.DTO.NoteDTO;
 import com.telecom3.gestion_etudiants.Models.Etudiant;
 import com.telecom3.gestion_etudiants.Models.Matiere;
 import com.telecom3.gestion_etudiants.Models.Note;
+import com.telecom3.gestion_etudiants.Repositories.EtudiantRepository;
+import com.telecom3.gestion_etudiants.Repositories.MatiereRepository;
 import com.telecom3.gestion_etudiants.Repositories.NoteRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +23,25 @@ public class NoteService {
     private MatiereService matiereService;
     @Autowired
     private EtudiantService etudiantService;
+    @Autowired
+    private EtudiantRepository etudiantRepository;
+    @Autowired
+    private MatiereRepository matiereRepository;
 
     //METHODE CRUD
 
     //create
 
     public Note create(NoteDTO noteDTO) {
-        Matiere matiere = matiereService.getMatiereById(noteDTO.getMatiereId());
+        Etudiant etudiant = etudiantRepository.findById(noteDTO.getEtudiantId())
+                .orElseThrow(() -> new EntityNotFoundException("Étudiant introuvable avec l'ID : " + noteDTO.getEtudiantId()));
+
+        Matiere matiere = matiereRepository.findById(noteDTO.getMatiereId())
+                .orElseThrow(() -> new EntityNotFoundException("Matière introuvable avec l'ID : " + noteDTO.getMatiereId()));
+
+        if (!etudiant.getClasse().getId().equals(matiere.getClasse().getId())) {
+            throw new RuntimeException("L'étudiant ne fait pas partie de la classe de cette matière !");
+        }
         Note note = new Note();
         note.setEtudiant(etudiantService.getById(noteDTO.getEtudiantId()));
         note.setMatiere(matiere);

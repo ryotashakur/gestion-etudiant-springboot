@@ -29,6 +29,7 @@ public class EtudiantDTO {
     private String prenom;
     @NotNull(message = "la date est obligatoire")
     private LocalDate dateNaissance;
+
     @NotNull(message = "l'idclass est obligatoire")
     private Long idClass;
 

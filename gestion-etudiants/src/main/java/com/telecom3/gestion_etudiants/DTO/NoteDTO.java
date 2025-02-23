@@ -22,7 +22,7 @@ public class NoteDTO {
     @NotNull(message = "l'id etudiant est obligatoire")
     private Long etudiantId;
 
-    @NotNull(message= "L'ID de la classe est obligatoire")
+    @NotNull(message= "L'ID de la matiere est obligatoire")
     private Long matiereId;
 
     @NotNull(message= "La note obtenue est obligatoire")
