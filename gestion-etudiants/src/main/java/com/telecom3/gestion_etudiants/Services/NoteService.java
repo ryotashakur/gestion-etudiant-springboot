@@ -72,7 +72,7 @@ public class NoteService {
 
     //recuperer etudiant rattrapage
     public List<NoteDTO> getEtudiantsEnRattrapage(Long classeId) {
-        List<Note> notesRattrapage = noteRepository.findByMatiereClasseIdAndValeurLessThan(classeId, 10.0);
+        List<Note> notesRattrapage = noteRepository.findByMatiereClasseIdAndNoteObtenueLessThan(classeId, 10.0);
         return NoteDTO.listNoteToListNoteDTO(notesRattrapage);
     }
 }
