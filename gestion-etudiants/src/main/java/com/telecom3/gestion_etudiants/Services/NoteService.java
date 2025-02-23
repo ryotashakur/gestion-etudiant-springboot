@@ -1,6 +1,7 @@
 package com.telecom3.gestion_etudiants.Services;
 
 import com.telecom3.gestion_etudiants.DTO.NoteDTO;
+import com.telecom3.gestion_etudiants.Models.Etudiant;
 import com.telecom3.gestion_etudiants.Models.Matiere;
 import com.telecom3.gestion_etudiants.Models.Note;
 import com.telecom3.gestion_etudiants.Repositories.NoteRepository;
@@ -33,19 +34,39 @@ public class NoteService {
             throw new RuntimeException("la note doit etre positive");
         }
         note.setNoteObtenue(noteDTO.getNoteObtenue());
-    return  note;
+        return noteRepository.save(note);
     }
 
     //read
 
-    public List <Note> getALl(){
+    public List<Note> getALl() {
         return noteRepository.findAll();
     }
 
     //readbyId
 
-    public List <Note> getById(Long id ){
-       Optional<Note> note= noteRepository.findById(id);
-       return note;
+    public Note getById(Long id) {
+        Optional<Note> note = noteRepository.findById(id);
+        if (note.isPresent()) {
+            return note.get();
+        }
+        throw new RuntimeException("la note n'existe pas");
 
+    }
+
+    //update
+
+    public Note update (NoteDTO noteDTO,Long id){
+        Note note =getById(id);
+        Etudiant etudiant=etudiantService.getById(id);
+        Matiere matiere=matiereService.getMatiereById(id);
+        note.setMatiere(matiere);
+        note.setEtudiant(etudiant);
+        return noteRepository.save(note);
+    }
+
+    public void deletebyId(long id) {
+        Note note= getById(id);
+        noteRepository.delete(note);
+    }
 }
