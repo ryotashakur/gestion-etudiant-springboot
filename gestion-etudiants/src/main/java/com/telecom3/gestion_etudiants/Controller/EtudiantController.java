@@ -50,4 +50,14 @@ public class EtudiantController {
         etudiantService.deletebyId(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/{etudiantId}/moyenne")
+    public ResponseEntity<Double> getMoyenneGenerale(@PathVariable Long etudiantId) {
+        return ResponseEntity.ok(etudiantService.calculerMoyenne(etudiantId));
+    }
+
+    @GetMapping("/{etudiantId}/admission")
+    public ResponseEntity<String> verifier(@PathVariable Long etudiantId) {
+        return ResponseEntity.ok(etudiantService.verifier(etudiantId));
+    }
 }

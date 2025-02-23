@@ -4,7 +4,9 @@ package com.telecom3.gestion_etudiants.Services;
 import com.telecom3.gestion_etudiants.DTO.EtudiantDTO;
 import com.telecom3.gestion_etudiants.Models.Classe;
 import com.telecom3.gestion_etudiants.Models.Etudiant;
+import com.telecom3.gestion_etudiants.Models.Note;
 import com.telecom3.gestion_etudiants.Repositories.EtudiantRepository;
+import com.telecom3.gestion_etudiants.Repositories.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ public class EtudiantService {
     private EtudiantRepository etudiantRepository;
     @Autowired
     private ClasseService classeService;
+    @Autowired
+    private NoteRepository noteRepository;
 
     //METHODE CRUD
     //create
@@ -68,4 +72,27 @@ public class EtudiantService {
         Etudiant etudiant = getById(id);
         etudiantRepository.delete(etudiant);
     }
+    /// /////////////calcul moyenne et verification de passage de l'étudiant
+
+//  Calcul de la moyenne générale d'un étudiant
+    public Double calculerMoyenne(Long etudiantId) {
+        List<Note> notes = noteRepository.findByEtudiantId(etudiantId);
+
+        if (notes.isEmpty()) {
+            throw new RuntimeException("Aucune note trouvée pour cet étudiant.");
+        }
+
+        double somme = notes.stream().mapToDouble(Note::getNoteObtenue).sum();
+        return somme / notes.size();
+    }
+
+    //étudiant est admis ou ajourné///////
+    public String verifier(Long etudiantId) {
+        double moyenne = calculerMoyenne(etudiantId);
+        return moyenne >= 10 ? "ADMIS" : "AJOURNÉ";
+    }
+
+
+
+
 }
