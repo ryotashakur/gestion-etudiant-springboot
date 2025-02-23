@@ -48,6 +48,7 @@ public class EtudiantDTO {
         etudiantDTO.setNom(etudiant.getNom());
         etudiantDTO.setPrenom(etudiant.getPrenom());
         etudiantDTO.setDateNaissance(etudiant.getDateNaissance());
+        etudiantDTO.setIdClass(etudiant.getClasse().getId());
         return etudiantDTO;
 
     }

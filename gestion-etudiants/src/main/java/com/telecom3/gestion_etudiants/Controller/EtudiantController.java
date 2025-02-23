@@ -33,14 +33,14 @@ public class EtudiantController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<EtudiantDTO> update (@RequestBody EtudiantDTO etudiantDTO, @Valid @PathVariable Long id){
+    public ResponseEntity<EtudiantDTO> update (@Valid @RequestBody EtudiantDTO etudiantDTO, @PathVariable Long id){
         EtudiantDTO etudiantDTO1= EtudiantDTO.etudiantToEtudiantDTO(etudiantService.update(etudiantDTO,id));
         return ResponseEntity.ok(etudiantDTO1);
 
     }
 
     @PostMapping
-    public ResponseEntity<EtudiantDTO> create (@RequestBody EtudiantDTO etudiantDTO){
+    public ResponseEntity<EtudiantDTO> create (@Valid @RequestBody EtudiantDTO etudiantDTO){
         EtudiantDTO etudiantDTO2= EtudiantDTO.etudiantToEtudiantDTO(etudiantService.create(etudiantDTO));
         return ResponseEntity.ok(etudiantDTO2);
     }

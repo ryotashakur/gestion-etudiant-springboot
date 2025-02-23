@@ -3,6 +3,8 @@ package com.telecom3.gestion_etudiants.Models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -19,4 +21,7 @@ public class Matiere {
     @ManyToOne
     @JoinColumn(name = "classe_id", nullable = false)
     private Classe classe;
+
+    @OneToMany(mappedBy = "matiere", cascade = CascadeType.ALL)
+    private List<Note> notes;
 }

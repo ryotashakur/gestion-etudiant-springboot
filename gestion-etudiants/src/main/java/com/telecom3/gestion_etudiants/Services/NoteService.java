@@ -1,4 +1,51 @@
 package com.telecom3.gestion_etudiants.Services;
 
+import com.telecom3.gestion_etudiants.DTO.NoteDTO;
+import com.telecom3.gestion_etudiants.Models.Matiere;
+import com.telecom3.gestion_etudiants.Models.Note;
+import com.telecom3.gestion_etudiants.Repositories.NoteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
 public class NoteService {
+
+    @Autowired
+    private NoteRepository noteRepository;
+    @Autowired
+    private MatiereService matiereService;
+    @Autowired
+    private EtudiantService etudiantService;
+
+    //METHODE CRUD
+
+    //create
+
+    public Note create(NoteDTO noteDTO) {
+        Matiere matiere = matiereService.getMatiereById(noteDTO.getMatiereId());
+        Note note = new Note();
+        note.setEtudiant(etudiantService.getById(noteDTO.getEtudiantId()));
+        note.setMatiere(matiere);
+        if (noteDTO.getNoteObtenue() < 0) {
+            throw new RuntimeException("la note doit etre positive");
+        }
+        note.setNoteObtenue(noteDTO.getNoteObtenue());
+    return  note;
+    }
+
+    //read
+
+    public List <Note> getALl(){
+        return noteRepository.findAll();
+    }
+
+    //readbyId
+
+    public List <Note> getById(Long id ){
+       Optional<Note> note= noteRepository.findById(id);
+       return note;
+
 }

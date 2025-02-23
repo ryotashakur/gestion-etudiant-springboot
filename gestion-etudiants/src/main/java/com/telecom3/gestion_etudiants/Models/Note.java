@@ -21,5 +21,8 @@ public class Note {
     private Matiere matiere;
 
     @Column(nullable = false)
-    private Double noteObtenue;  //
+    private Double noteObtenue;
+
+
+    //
 }

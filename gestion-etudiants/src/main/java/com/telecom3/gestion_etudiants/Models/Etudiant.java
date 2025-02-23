@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,6 +25,10 @@ public class Etudiant {
     @ManyToOne
     @JoinColumn(name = "classe_id")
     private Classe classe;
+
+    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
+    private List<Note> notes;
+
 
 
 
