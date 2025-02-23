@@ -1,9 +1,6 @@
 package com.telecom3.gestion_etudiants.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +21,9 @@ public class Etudiant {
     private String nom;
     private String prenom;
     private LocalDate dateNaissance;
-    private Long idClass;
+    @ManyToOne
+    @JoinColumn(name = "classe_id")
+    private Classe classe;
 
 
 
