@@ -1,9 +1,7 @@
 package com.telecom3.gestion_etudiants.Services;
 
-import com.telecom3.gestion_etudiants.DTO.FiliereDTO;
 import com.telecom3.gestion_etudiants.DTO.MatiereDTO;
 import com.telecom3.gestion_etudiants.Models.Classe;
-import com.telecom3.gestion_etudiants.Models.Filiere;
 import com.telecom3.gestion_etudiants.Models.Matiere;
 import com.telecom3.gestion_etudiants.Repositories.ClasseRepository;
 import com.telecom3.gestion_etudiants.Repositories.MatiereRepository;
@@ -11,7 +9,6 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,7 +30,8 @@ public class MatiereService {
         if (ifMatiereExists) {
             throw new RuntimeException("Une matière du même nom existe déjà dans la classe : " + classe.getNom());
         }
-        Matiere matiere = MatiereDTO.matiereDTOtoMatiere(matiereDTO, classe);
+
+        Matiere matiere = MatiereDTO.matiereDTOtoMatiere(matiereDTO);
         matiere.setClasse(classe);
         classe.getMatieres().add(matiere);
 
@@ -49,9 +47,18 @@ public class MatiereService {
     public List <Matiere> getAll() {
         return matiereRepository.findAll();
     }
+    //recuperer tous les matieres dans une classe
+
+
+     public List<Matiere> getMatieresByClasse(Long classeId) {
+
+        return matiereRepository.findByClasseId(classeId);
+
+
+     }
 
     // update
-    public Matiere update(Long id, MatiereDTO matiereDTO) {
+    public MatiereDTO update(Long id, MatiereDTO matiereDTO) {
         Matiere matiere = getMatiereById(id);
 
         Classe classe = classeRepository.findById(matiereDTO.getClasseId())
@@ -64,7 +71,9 @@ public class MatiereService {
         matiere.setNomMatiere(matiereDTO.getNomMatiere());
         matiere.setClasse(classe);
 
-        return matiereRepository.save(matiere);
+        Matiere savedMatiere = matiereRepository.save(matiere);
+        return MatiereDTO.matiereToMatiereDTO(savedMatiere);
+
     }
 
     //  Supprimer une matière

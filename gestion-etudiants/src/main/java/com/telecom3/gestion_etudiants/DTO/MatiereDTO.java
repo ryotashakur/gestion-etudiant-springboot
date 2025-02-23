@@ -30,11 +30,10 @@ public class MatiereDTO {
     //creation des mappers static
 
     //  Mapper DTORequest
-    public static Matiere matiereDTOtoMatiere(MatiereDTO matiereDTO, Classe classe) {
+    public static Matiere matiereDTOtoMatiere(MatiereDTO matiereDTO) {
         Matiere matiere = new Matiere();
         matiere.setId(matiereDTO.getId());
         matiere.setNomMatiere(matiereDTO.getNomMatiere());
-        matiere.setClasse(classe);
         return matiere;
     }
 
