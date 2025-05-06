@@ -40,9 +40,9 @@ gestion-etudiants/
    git clone https://github.com/ryotashakur/gestion-etudiant-springboot.git
    ```
 
-2. Ouvre le projet avec **IntelliJ** ou **Spring Tool Suite**
+2. Ouvre le projet avec **IntelliJ** ou VsCode
 
-3. Configure la base de données dans `application.properties` (ou utilise H2 pour les tests)
+3. Configure la base de données dans `application.properties` (ou utilise mysql pour les tests)
 
 4. Lance l'application :
    ```bash
